@@ -1,0 +1,9 @@
+.footer {
+    background-color: rgb(223, 255, 127);
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between; /* Adjust as needed */
+    margin-top: 10px; /* Optional: Add margin for spacing */
+  }

@@ -1,0 +1,2 @@
+devo portare i nomi dei saldatori nel compilatore
+devo lavorare con gli elementi saldati e solo lavorati fatto elementi saldati

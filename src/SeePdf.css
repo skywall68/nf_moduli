@@ -1,0 +1,10 @@
+.pdf-container {
+    margin-bottom: -16px; /* Sostituisci con il valore desiderato per eliminare lo spazio tra le pagine */
+  }
+
+  
+  .react-pdf__Page__annotations  {
+    width: auto !important; /* Imposta la larghezza su auto */
+    height: 100% !important; /* Imposta l'altezza su 100% */
+  }
+ 
