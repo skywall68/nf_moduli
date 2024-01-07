@@ -5,7 +5,7 @@ import  './SeePdf.css'  /*importo file css*/
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
 
-const SeePdf = ({leggiFile,setNumeroPages, setAppLista, setAppCliente, setAppCantiere, setAppOpera, setAppPlan, setAppElementiSaldati}) => {
+const SeePdf = ({leggiFile,setNumeroPages, setAppLista, setAppCliente, setAppCantiere, setAppOpera, setAppPlan, setAppElementiSaldati, appRecuperaMiaLista }) => {
   const [pdfPath, setPdfPath] = useState('');
   const [totalPages, setTotalPages] = useState(null);
   const [linesArray, setLinesArray] = useState([]);
@@ -16,17 +16,23 @@ const SeePdf = ({leggiFile,setNumeroPages, setAppLista, setAppCliente, setAppCan
   const [opera, setOpera]= useState('');
   const [plan, setPlan]= useState('');
   const [elementi, setElementi]= useState([]);
+  const [recuperaMiaLista , setRecuperaLista]= useState(appRecuperaMiaLista);
   
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
+      console.log('questo è il file scelto:', file)
+      console.log('recupera lista da app.js.',recuperaMiaLista) //ho la lista che arriva da App.js
       setPdfPath(URL.createObjectURL(file));
       setLinesArray([]); // Resetta l'array quando il file cambia
       leggiFile()
+     
       
     }
   };
+  //processiamo il file
+ 
 
   const pdfStyles = {
     display: 'flex',
@@ -126,11 +132,22 @@ const SeePdf = ({leggiFile,setNumeroPages, setAppLista, setAppCliente, setAppCan
      const elencoChiavi = Object.keys(datiPuliti).filter(key => key >= intervalloInferiore && key <= intervalloSuperiore);
 
   // Crea un nuovo oggetto con le chiavi filtrate e senza la scritta 'Element:'
-  const elencoElementi = elencoChiavi.reduce((acc, key) => {
+  let elencoElementi = elencoChiavi.reduce((acc, key) => {
     acc[key] = dati[key].replace('Elément: ','');//rimuovo la scritta 'Elément:' per avere gli elementi puri:
     return acc;
   }, {});
   setElementi(elencoElementi) //ho gli elementi puliti
+  const idScegli= 1
+  const scegli = 'Scegli...'
+  //voglio portare la scritta 'Scegli...' all'inizio della dropdown list dei elementi saldati, devo confertire l'oggetto
+  //in un array, aggiungere 'scegli'  per poi riconvertirlo in un oggetto
+    //converto l'oggetto in copie chiave-valore
+    let arrayOggetto = Object.entries(elencoElementi)
+    //aggiungo scegli all'Array
+    arrayOggetto.unshift([idScegli,scegli])
+    //converto array nell'oggetto
+    elencoElementi = Object.fromEntries(arrayOggetto)
+  console.log('Quali sono gli elementi finiti con Scegli',elencoElementi)
   setAppElementiSaldati(elencoElementi)//prendo gli elementi e tramite app.js li porto in ElementiSaldati.js
 
   
@@ -144,7 +161,7 @@ const SeePdf = ({leggiFile,setNumeroPages, setAppLista, setAppCliente, setAppCan
     setTotalPages(numPages); //mi fa vedere tutte le pagine che se disattivato ne vedo solo 1
     setNumeroPages(numPages);
     
-    //devo recuperare i dati chiamando creando una funzione async
+    //devo recuperare i dati chiamando e creando una funzione async
     recuperaDatiCliente(numPages);
     
    
@@ -157,15 +174,15 @@ const SeePdf = ({leggiFile,setNumeroPages, setAppLista, setAppCliente, setAppCan
 
 
   return (
-    <div>
-      {console.log('numero pagine:', totalPages)}
+    <div className='pdf-container'>
+      {/* {console.log('numero pagine:', totalPages)}
       {console.log('Elenco dati:', linesArray)}
       {console.log('lista n:', lista)}
       {console.log('cliente:',nomeCliente)}
       {console.log('cantiere:',cantiere)}
       {console.log('opera:',opera)}
       {console.log('plan:',plan)}
-      {console.log('ULTIMA PAGINA:',linesArrayElementi )}
+      {console.log('ULTIMA PAGINA:',linesArrayElementi )} */}
       <input type="file" accept=".pdf" onChange={handleFileChange} style={{marginTop:'50px', marginLeft:'50%'}} />
         {pdfPath && (
             <div  style={pdfStyles}>

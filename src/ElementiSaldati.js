@@ -9,11 +9,12 @@ function ElementiSaldati({appElementiSaldati, setAppElementoScelto}) {
   useEffect(() => {
     const copiaElementi = async () => {
       if (appElementiSaldati != null) {
-        let data;
+        let data=[];
 
         if (Array.isArray(appElementiSaldati)) {
           // Se appElementiSaldati è già un array, lo usiamo direttamente
           data = appElementiSaldati;
+         
         } else if (typeof appElementiSaldati === 'object') {
           // Se appElementiSaldati è un oggetto, otteniamo i valori
           data = Object.values(appElementiSaldati);
@@ -21,14 +22,15 @@ function ElementiSaldati({appElementiSaldati, setAppElementoScelto}) {
           // Se appElementiSaldati non è né un array né un oggetto, gestisci come desideri
           data = [];
         }
-
+        console.log('Scegli elementi saldati:',data)
         setElementiSaldati(data);
       } else {
         setElementiSaldati([]);
       }
     };
-    copiaElementi();
+    copiaElementi();       
   }, [appElementiSaldati]);
+  
 
 
   const  handleSelectChange = (e)=>{

@@ -11,6 +11,7 @@ import Calendario from './Calendario';
 import PdfArray from './PdfArray';
 import PdfReader from './PdfReader';
 import PdfReaderRiga2 from './PdfReaderRiga2';
+import Planning from './Planning';
 import SeePdf from './SeePdf'
 import ElementiSaldati from './ElementiSaldati';
 import Tipologia from './Tipologia';
@@ -40,6 +41,11 @@ function App() {
   const [listaPagina2Originali, setListaPagina2Originali]= useState([])
   const [appParametriStampa, setAppParametriStampa]= useState([])
   const [appControllatoNdi, setAppControllatoNdi]= useState('') // al numero di elementi appartiene l'elemento controllato
+  const [appRecuperaMiaLista, setAppRecuperaLista]= useState('List 23997 - Items list.pdf') //recupero la lista da eventuale click
+
+  //PROVA PER RECUPERARE LISTA DA PLANNING//////
+  //setAppRecuperaLista('')
+  
 
   // Funzione per deselezionare tutte le checkbox
   const handleUncheckAll = () => {
@@ -120,7 +126,8 @@ function App() {
        
        {/* Colonna sinistra: PDF */}
       <div className='pdf' style={{flex:1 }}>
-       
+        {/* SEGNAPOSTO PER IL PLANNING, RECUPERIAMO LA LISTA E LA DATA PER DARLA IN MANO A SEEPDF*/ }
+          <Planning />
           <SeePdf 
           leggiFile={leggiFile}
           setNumeroPages={setNumeroPages} 
@@ -130,6 +137,8 @@ function App() {
           setAppOpera= {setAppOpera}
           setAppPlan = {setAppPlan}
           setAppElementiSaldati= { setAppElementiSaldati}  /* mi legge gli elementi nel pdf*/ 
+          appRecuperaMiaLista = {appRecuperaMiaLista}
+
            />
       </div>
 

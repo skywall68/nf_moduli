@@ -42,15 +42,16 @@ const Footer = ({
  const cliente = appCliente
  const saldatori = saldatoriApp
  const tipologia = appTipologia
- const opera = appOpera
+ const opera = `${appOpera}  /`
  const plan = appPlan
  const etichetta = appElementoScelto
  const parametri_stampa = [...appParametriStampa]
  const nElementi = appControllatoNdi
  const spuntaFabbrica='x'
  const spuntaSuPiano = 'x'
- const cantiere = appCantiere
+ const cantiere = `${appCantiere} /`
  const paginaUnoAlto = [spuntaFabbrica,spuntaSuPiano,tipologia,cantiere,opera,cliente,plan,lista,etichetta,saldatori,]
+ console.log('nome cantiere:',cantiere)
 
  //creo un array riepilogativo:
  const arrayCombinato = paginaUnoAlto.map((valore,indice)=>({
@@ -92,6 +93,7 @@ const Footer = ({
           x: coordinate.x,
           y: height  - coordinate.y, 
           font,
+          size:parametri_stampa[32].font,
           color: rgb(0,0,0),
         })
        })
@@ -99,7 +101,7 @@ const Footer = ({
       const testo_spuntato = 'x'
       //const partenzaY = 475 //partenza asse delle y
       //let k = -35 //asse delle y
-       //definiamo un ciclo dei controlli che conforme sia 'Conforme' o 'Non Conforme'
+       //definiamo un ciclo dei controlli che conforme sia 'Conforme' o 'Non Conforme' poi  DA METTERE EVENTUALI COMMENTI ED AZIONI PER OGNI RIGA
        let mioIdPagina1 = 10
        let coordinate_pagina = []
        
@@ -111,15 +113,36 @@ const Footer = ({
              x:coordinate_pagina.x,
              y: height -coordinate_pagina.y,
              font,
+             size:parametri_stampa[32].font,
              color: rgb(0, 0, 0),
            })
-          } else  {
+          } else if (controllo.conforme === 'Non Conforme') {
            page1.drawText(testo_spuntato, {
              x:coordinate_pagina.x,
              y: height -coordinate_pagina.y,
              font,
+             size:parametri_stampa[32].font,
              color: rgb(0, 0, 0),
            })
+            //mettere if per commenti ed azioni
+          if(controllo.commenti !==''){
+            page1.drawText(controllo.commenti,{
+              x:parametri_stampa[30].x,
+              y: height -coordinate_pagina.y,
+              font,
+              size:parametri_stampa[32].font,
+              color: rgb(0, 0, 0),  
+            })
+            page1.drawText(controllo.azioneCurativa,{
+              x:parametri_stampa[31].x,
+              y: height -coordinate_pagina.y,
+              font,
+              size:parametri_stampa[32].font,
+              color: rgb(0, 0, 0),  
+            })
+          }
+
+           
           }
           mioIdPagina1++
        })
@@ -131,9 +154,11 @@ const Footer = ({
          x:parametri_stampa[29].x,
          y: height -parametri_stampa[29].y,
          font,
+         size:parametri_stampa[32].font,
          color: rgb(0, 0, 0),
        })
       }
+     
       //passiamo alla SECONDA PAGINA
       let mioIdPagina2 = 17
      
@@ -145,6 +170,7 @@ const Footer = ({
            x:coordinate_pagina.x,
            y: height -coordinate_pagina.y,
            font,
+           size:parametri_stampa[32].font,
            color: rgb(0, 0, 0),
           })
        } else if (controllo.conforme === 'Non Conforme'){
@@ -152,25 +178,45 @@ const Footer = ({
            x:coordinate_pagina.x,
            y: height -coordinate_pagina.y,
            font,
+           size:parametri_stampa[32].font,
            color: rgb(0, 0, 0),
           })
+          //mettere if per commenti ed azioni
+          if(controllo.commenti !==''){
+            page2.drawText(controllo.commenti,{
+              x:parametri_stampa[30].x,
+              y: height -coordinate_pagina.y,
+              font,
+              size:parametri_stampa[32].font,
+              color: rgb(0, 0, 0),  
+            })
+            page2.drawText(controllo.azioneCurativa,{
+              x:parametri_stampa[31].x,
+              y: height -coordinate_pagina.y,
+              font,
+              size:parametri_stampa[32].font,
+              color: rgb(0, 0, 0),  
+            })
+          }
        }
        mioIdPagina2++
+       console.log('elementi listaPagina2', listaPagina2)
 
       })
-      //data controllo:
+      //data del controllo:
       page2.drawText(dataControllo, {
         
         x:parametri_stampa[28].x,
         y: height -parametri_stampa[28].y,
         font,
+        size:parametri_stampa[32].font,
         color: rgb(1, 0, 0),
        })
        
 
        const modifiedPdfBytes = await pdfDoc.save(); //consente di salvare le modifiche apportate al documento PDF e ottenere i byte rappresentanti il PDF modificato
        const blob = new Blob([modifiedPdfBytes], { type: 'application/pdf' });// crea un oggetto Blob  rappresenta un blocco di dati, in questo caso, l'array di byte che costituisce il documento PDF modificato
-       saveAs(blob, `${lista}_pj8.pdf`); /* utilizza FileSaver.js per avviare il processo di salvataggio del file nel browser. Il browser visualizzerà quindi una finestra di dialogo per il salvataggio, consentendo 
+       saveAs(blob, `${lista}-${dataControllo}_pj8.pdf`); /* utilizza FileSaver.js per avviare il processo di salvataggio del file nel browser. Il browser visualizzerà quindi una finestra di dialogo per il salvataggio, consentendo 
        all'utente di scaricare il file PDF modificato con il nome specificato ('output.pdf').*/ 
          
       
