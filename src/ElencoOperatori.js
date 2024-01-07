@@ -4,7 +4,7 @@ import './ElencoOperatori.css'
 
  const ElencoOperatori = ({ setAppOperatore}) => {
     const [operatori, setOperatori] = useState([]);
-    const [operatoreSelezionato, setOperatoreSelezionato] = useState();
+    const [operatoreSelezionato, setOperatoreSelezionato] = useState('');
 
     useEffect(() => {
         const fetchData = async () => {
@@ -27,7 +27,10 @@ import './ElencoOperatori.css'
         // Memorizza il valore selezionato nello stato o fai ciò che serve
         setOperatoreSelezionato(selectedOperatore)
         setAppOperatore(selectedOperatore) //porto operatore a Compilatore tramite App.js
+       
+
       };
+     
     
       return (
         <div className='listaOperatori'> 

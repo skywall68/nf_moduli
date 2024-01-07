@@ -1,20 +1,25 @@
-import React, {useEffect, useState} from 'react'
+import React, {useState} from 'react'
 
 import './CheckListDimensioni.css'
 
-const CheckListDimensioni = ({setListaPagina2, listaPagina2Originali}) => {
+const CheckListDimensioniPuro = ({setListaPagina2, onUncheckAll}) => {
+   const statoIniziale=[
+    { id:1 , nomePrimario:'Posizione relativa', nome: 'Staffe e ganci (c)', meno:'-10',piu:'+10',conforme:null, commenti:'', azioneCurativa:''},
+    { id:2 , nomePrimario:'Posizione relativatt', nome: 'Altri elementi oltre staffe e ganci (A)', meno:'-30',piu:'+30',conforme:null, commenti:'', azioneCurativa:''},
+    { id:3 , nomePrimario:'Posizione relativa cumulata', nome: 'Staffe e ganci (C)', meno:'-10',piu:'+10',conforme:null, commenti:'', azioneCurativa:''},
+    { id:4, nomePrimario:'Larghezza/Altezza', nome: 'Dimensione nominale < 150 mm', meno:'-10',piu:'+5',conforme:null, commenti:'', azioneCurativa:''},
+    { id:5 , nomePrimario:'Larghezza/Altezza', nome: 'Dimensione nominale >= 150 mm', meno:'-20',piu:'+5',conforme:null, commenti:'', azioneCurativa:''},
+    { id:6 , nomePrimario:'Armature la cui lunghezza è determinata da barre tagliate(senza pieghi)', nome: 'L <= 2 m', meno:'-20',piu:'+10',conforme:null, commenti:'', azioneCurativa:''},
+    { id:7 , nomePrimario:'Armature la cui lunghezza è determinata da barre tagliate(senza pieghi)', nome: '2 m < L <= 4 m', meno:'-40',piu:'+10',conforme:null, commenti:'', azioneCurativa:''},
+    { id:8 , nomePrimario:'Armature la cui lunghezza è determinata da barre tagliate(senza pieghi)', nome: 'L > 4 m', meno:'-50',piu:'+10',conforme:null, commenti:'', azioneCurativa:''},
+    { id:9 , nomePrimario:'Lunghezza', nome: 'Armature la cui lunghezza è determinata da barre tagliate e sagomate (L)', meno:'-30',piu:'+10',conforme:null, commenti:'', azioneCurativa:''},
+    { id:10 , nomePrimario:'Lunghezza', nome: 'Armature utilizzate per sormonto o tagliate su misura (per esempio chainages, semelles filantes, ch, rv,sf', meno:'-50',piu:'+50',conforme:null, commenti:'', azioneCurativa:''},
+    { id:11 , nomePrimario:'Angoli', nome: 'Angoli pieghi -caso angolo = 90°', meno:'0',piu:'+10',conforme:null, commenti:'', azioneCurativa:''},
+    { id:12 , nomePrimario:'Angoli', nome: 'Angoli pieghi - caso altri angoli', meno:'-10',piu:'+10',conforme:null, commenti:'', azioneCurativa:''},
+    { id:13 , nomePrimario:'', nome: 'lunghezza parti dritte dopo curvatura (ganci e pieghi)', meno:'-5',piu:'+30',conforme:null, commenti:'', azioneCurativa:''},
+   ]
+    const [controlli, setControlli]= useState(statoIniziale)
 
-   const [listaIniziale, setListaIniziale]=useState([])
-   const [controlli, setControlli]= useState([]) 
-   
-  //mi serve per aggiornare la schermata con tutte le voci ogni volta che cambia
-   useEffect(() => {
-    setControlli(listaPagina2Originali)
-    
-   }, [listaPagina2Originali])
-
-  
-   
     const [mostraTabella, setMostraTabella] = useState(true); //mi permette di nascondere la tabella
     //mostra tabella:
     const handleToggleTabella =()=>{
@@ -30,9 +35,9 @@ const CheckListDimensioni = ({setListaPagina2, listaPagina2Originali}) => {
          )  
     }
     //resetta checkbox:
-    /*const resetta = () => {
+    const resetta = () => {
       setControlli(statoIniziale);
-    };*/
+    };
   
 
     const handleCheckboxChange = (event,id)=>{
@@ -173,12 +178,12 @@ const CheckListDimensioni = ({setListaPagina2, listaPagina2Originali}) => {
          </table>
 
             )}
-         
-          
+          {/* Passa la funzione onUncheckAll come prop al tuo componente */}
+      <button onClick={resetta}>Deseleziona tutto</button>
         </div>
     </div>
    
   )
 }
 
-export default CheckListDimensioni
+export default CheckListDimensioniPuro

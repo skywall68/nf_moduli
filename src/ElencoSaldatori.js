@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import './ElencoSaldatori.css'
 
-const ElencoSaldatori = () => {
+const ElencoSaldatori = ({setSaldatoriApp}) => {
     const [saldatori, setSaldatori] = useState([]);
     const [saldatoriSelezionati, setSaldatoriSelezionati] = useState('');
 
@@ -13,6 +13,7 @@ const ElencoSaldatori = () => {
                 const data = risultato.text();
                 const saldatoriArray = (await data).split("\n");
                 setSaldatori(saldatoriArray)
+               
             } catch (error) {
                 console.error('Errore nella lettura del file:', error);
             }
@@ -24,6 +25,7 @@ const ElencoSaldatori = () => {
         const selectedSaldatore = event.target.value;
         // Memorizza il valore selezionato nello stato
         setSaldatoriSelezionati(selectedSaldatore)
+        setSaldatoriApp(selectedSaldatore)
     }
 
   return (
@@ -36,7 +38,7 @@ const ElencoSaldatori = () => {
             </option>
         ))}
     </select>
-    <h3>saldatori:{saldatoriSelezionati}</h3>
+    
     </div>
    
   )

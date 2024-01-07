@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 
 import './CheckList.css'
 
-const CheckList = () => {
+const CheckList = ({setListaPagina1}) => {
   
   const [controlli, setControlli] = useState([
     { id: 1, nome: 'Tipo ferro B500A o B500B', conforme: null, commenti:'', azioneCurativa:'' },
@@ -27,6 +27,7 @@ const CheckList = () => {
         controllo.id === id ? {...controllo, conforme: conformeValue} : controllo
       )
     )
+    setListaPagina1(controlli)
   }
 
   const handleInputChangeCommenti = (id,field,value) =>{
@@ -37,6 +38,7 @@ const CheckList = () => {
       )
     )
     console.log(`ID: ${id}, Campo: ${field}, Valore: ${value}`);
+    setListaPagina1(controlli)
   }
 
   const handleInputChangeAzione = (id,field,value) =>{
@@ -46,7 +48,7 @@ const CheckList = () => {
        azione.id === id ? {...azione,[field]:value}: azione
       )
     )
-    
+    setListaPagina1(controlli)
   }
 
   return (

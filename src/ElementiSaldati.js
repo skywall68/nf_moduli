@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 
 import './ElementiSaldati.css'
 
-function ElementiSaldati({appElementiSaldati}) {
+function ElementiSaldati({appElementiSaldati, setAppElementoScelto}) {
   const [elementiSaldati, setElementiSaldati]=useState([])
   const [elementoScelto, setelementoScelto]= useState('')
   
@@ -34,6 +34,7 @@ function ElementiSaldati({appElementiSaldati}) {
   const  handleSelectChange = (e)=>{
     const selectElement = e.target.value; //ho l'elemento selezionato cosa ne faccio?
     setelementoScelto(selectElement)
+    setAppElementoScelto(selectElement)//lo mando in App.js per spedirlo in fooder.js per la stampa
   }
 
   return (

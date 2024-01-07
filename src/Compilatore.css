@@ -16,8 +16,9 @@ p {
 }
 
 .calendario {
-  margin-top: 15px;
+  margin-top: auto;
   background-color: blueviolet;
+
 }
 .controllo {
   display: flex;

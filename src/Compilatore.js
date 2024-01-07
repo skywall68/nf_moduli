@@ -1,20 +1,28 @@
 import React, {useState} from 'react'
 
-import Calendario from './Calendario';
-import "react-datepicker/dist/react-datepicker.css";
 
+import "react-datepicker/dist/react-datepicker.css";
+import Calendario from './Calendario';
 import './Compilatore.css'
 
-const Compilatore = ({numeroPages, appLista, appCliente, appCantiere,appOpera, appPlan, appOperatore, }) => {
+const Compilatore = ({numeroPages, appLista, appCliente, appCantiere,appOpera, appPlan, appOperatore, setDataConsegnaApp }) => {
  
- 
+  
+  const [dataCompilatore, setDataCompilatore]=useState('')
+  //setDataConsegnaApp(dataCompilatore)
+  
+  
   return (
+    
     <div className='bodyCompilatore'>
+      
       <div className='header'>
        {/*<p>Numero di pagine Lista:n°{numeroPages}</p>*/}
-        <p>Data consegna:</p>
-        <Calendario className='calendario'  />
-        <div className='controllo'>Controllo a cura di:<h3>{appOperatore}</h3></div> 
+       
+       <div className='controllo'>Controllo a cura di:<h3>{appOperatore}</h3></div> 
+              
+       
+       
       </div>
     
    

@@ -5,7 +5,7 @@ import  './SeePdf.css'  /*importo file css*/
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
 
-const SeePdf = ({setNumeroPages, setAppLista, setAppCliente, setAppCantiere, setAppOpera, setAppPlan, setAppElementiSaldati}) => {
+const SeePdf = ({leggiFile,setNumeroPages, setAppLista, setAppCliente, setAppCantiere, setAppOpera, setAppPlan, setAppElementiSaldati}) => {
   const [pdfPath, setPdfPath] = useState('');
   const [totalPages, setTotalPages] = useState(null);
   const [linesArray, setLinesArray] = useState([]);
@@ -23,6 +23,7 @@ const SeePdf = ({setNumeroPages, setAppLista, setAppCliente, setAppCantiere, set
     if (file) {
       setPdfPath(URL.createObjectURL(file));
       setLinesArray([]); // Resetta l'array quando il file cambia
+      leggiFile()
       
     }
   };

@@ -2,16 +2,17 @@ import React, { useState} from 'react'
 
 import './Commenti.css'
 
-const Commenti = () => {
-    const [inputValue1, setInputValue1]=useState('')
+const Commenti = ({setAppControllatoNdi, appControllatoNdi}) => {
+    const [inputValue1, setInputValue1]=useState('1')
     const [ inputValue2, setInputValue2]=useState('')
 
     const handleInputChange1 = (e)=>{
         setInputValue1(e.target.value)
     }
-
+    //quantità elementi appartiene l'elemento:
     const handleInputChange2 = (e)=>{
         setInputValue2(e.target.value)
+        setAppControllatoNdi(e.target.value) //quanti elementi sono
     }
 
 
@@ -26,7 +27,7 @@ const Commenti = () => {
             onChange={handleInputChange1}
             placeholder="1"
           />
-         <p style={{textAlign:'center'}}> di </p> 
+         <p style={{textAlign:'center'}}> di {`${appControllatoNdi}`} </p> 
           <input className='inputCommenti'
             type="number"
             value={inputValue2}
