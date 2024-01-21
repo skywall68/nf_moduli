@@ -5,10 +5,10 @@ import "react-datepicker/dist/react-datepicker.css";
 import Calendario from './Calendario';
 import './Compilatore.css'
 
-const Compilatore = ({numeroPages, appLista, appCliente, appCantiere,appOpera, appPlan, appOperatore, setDataConsegnaApp }) => {
+const Compilatore = ({numeroPages, appLista, appCliente, appCantiere,appOpera, appPlan, setDataConsegnaApp }) => {
  
   
-  const [dataCompilatore, setDataCompilatore]=useState('')
+  //const [dataCompilatore, setDataCompilatore]=useState('')
   //setDataConsegnaApp(dataCompilatore)
   
   
@@ -19,7 +19,7 @@ const Compilatore = ({numeroPages, appLista, appCliente, appCantiere,appOpera, a
       <div className='header'>
        {/*<p>Numero di pagine Lista:n°{numeroPages}</p>*/}
        
-       <div className='controllo'>Controllo a cura di:<h3>{appOperatore}</h3></div> 
+       {/* <div className='controllo'>Controllo a cura di:<h3>{appOperatore}</h3></div>  */}
               
        
        

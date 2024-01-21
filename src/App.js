@@ -19,9 +19,13 @@ import Commenti from './Commenti';
 import CheckList from './CheckList';
 import CheckListDimensioni from './CheckListDimensioni';
 import Footer from './Footer';
+import Footer2 from './Footer2';
+import Impostazioni from './Impostazioni';
+import Operatore from './Operatore';
 
 function App() {
-  
+  const [pj8, setpj8]=useState();
+  const [visualizzaSceltaListe, setVisualizzaSceltaliste]=useState(false);
   const [numeroPages, setNumeroPages] = useState('0');
   const [dataConsegnaApp, setDataConsegnaApp]=useState('');
   const [appLista, setAppLista]= useState('');
@@ -30,7 +34,7 @@ function App() {
   const [appCantiere, setAppCantiere] = useState('');
   const [appOpera, setAppOpera] = useState('');
   const [appPlan, setAppPlan] = useState('');
-  const [appOperatore, setAppOperatore] = useState (''); //legge su localstorage se non trova nulla è ''
+  const [appOperatore, setAppOperatore] = useState (''); 
   const [saldatoriApp, setSaldatoriApp] =useState('Scegli') //legge i saldatori
   const [appElementiSaldati, setAppElementiSaldati]= useState([])
   const [appElementoScelto,setAppElementoScelto]=useState('')
@@ -43,8 +47,7 @@ function App() {
   const [appControllatoNdi, setAppControllatoNdi]= useState('') // al numero di elementi appartiene l'elemento controllato
   const [appRecuperaMiaLista, setAppRecuperaLista]= useState('List 23997 - Items list.pdf') //recupero la lista da eventuale click
 
-  //PROVA PER RECUPERARE LISTA DA PLANNING//////
-  //setAppRecuperaLista('')
+ 
   
 
   // Funzione per deselezionare tutte le checkbox
@@ -71,10 +74,10 @@ function App() {
   
 
   //memorizza operatore ogni volta che c'è un cambiamento
-  useEffect(()=>{
-    //salva su localStorage
-    localStorage.setItem('appOperatore',JSON.stringify(appOperatore))
-  },[appOperatore])
+  // useEffect(()=>{
+  //   //salva su localStorage
+  //   localStorage.setItem('appOperatore',JSON.stringify(appOperatore))
+  // },[appOperatore])
   
 
   //recupero i dati originali dal file checklist.json per mandarli poi in CheckDimensioni
@@ -118,29 +121,113 @@ function App() {
   },[])
 
   //******************************fine*************************************************** */ */
-
+   //creiamo la condizione di vedere o non vedere gli elementi :
+   let planning;
+   let calendario;
+   let dataConsegna;
+   let compilatore;
+   let operatore;
+   let saldatori;
+   let elencoElementi;
+   let tipo;
+   let comments;
+   let checkList1;
+   let checkList2;
+   let fooder;
+   let ultimaLista;
+   let sceltaPj;
+   let titolo;
+   if(visualizzaSceltaListe){
+    planning=<Planning />
+    ultimaLista=  <h3>{`Ultima lista creata: n. ${pdfListaCreata}`}</h3>
+    calendario= <Calendario className='calendario' setDataConsegnaApp={setDataConsegnaApp}  />
+    dataConsegna=<h2>Data consegna:{` ${dataConsegnaApp}`}</h2>
+    compilatore= <Compilatore
+                  numeroPages={numeroPages} 
+                  //setDataConsegnaApp={setDataConsegnaApp}
+                  appLista={appLista}
+                  appCliente={appCliente}
+                  appCantiere={appCantiere}
+                  appOpera={appOpera}
+                  appPlan={appPlan}
+                 />
+    operatore=<Operatore setAppOperatore={setAppOperatore} />
+    saldatori= <ElencoSaldatori className='saldatori' setSaldatoriApp={setSaldatoriApp} />
+    elencoElementi=  <ElementiSaldati 
+                     className='elementiSaldati'
+                     appElementiSaldati={appElementiSaldati} 
+                     setAppElementoScelto={setAppElementoScelto} />
+    tipo= <Tipologia
+           className='tipologia'
+           setAppTipologia={setAppTipologia}
+          />
+    comments=  <Commenti
+                className='commenti'
+                setAppControllatoNdi={setAppControllatoNdi} 
+                appControllatoNdi={appControllatoNdi}
+                /> 
+    checkList1=  <CheckList setListaPagina1={setListaPagina1} />
+    checkList2=   <CheckListDimensioni 
+                   setListaPagina2={setListaPagina2} 
+                   listaPagina2Originali={listaPagina2Originali}
+                   />
+    fooder= <Footer2
+            pj8={pj8}
+            appOperatore={appOperatore} 
+            dataConsegnaApp={dataConsegnaApp} 
+            appLista={appLista} 
+            appCliente={appCliente}
+            appCantiere={appCantiere}
+            appOpera={appOpera}
+            appPlan={appPlan}
+            appElementoScelto={appElementoScelto}
+            saldatoriApp={saldatoriApp}
+            appTipologia={appTipologia}
+            listaPagina1={listaPagina1} 
+            listaPagina2={listaPagina2} 
+            setPdfListaCreata={setPdfListaCreata}
+            appParametriStampa={appParametriStampa}
+            appControllatoNdi={appControllatoNdi}
+            numeroPages={numeroPages}
+            />                          
+    } else {
+       titolo= <h2>Scegli il file pj</h2>
+      sceltaPj=<Impostazioni setpj8={setpj8} setVisualizzaSceltaliste={setVisualizzaSceltaliste} />
+    }
 
 
   return (
-    <div style={{display:'flex'}}>
-       
-       {/* Colonna sinistra: PDF */}
-      <div className='pdf' style={{flex:1 }}>
-        {/* SEGNAPOSTO PER IL PLANNING, RECUPERIAMO LA LISTA E LA DATA PER DARLA IN MANO A SEEPDF*/ }
-          <Planning />
-          <SeePdf 
-          leggiFile={leggiFile}
-          setNumeroPages={setNumeroPages} 
-          setAppLista={setAppLista}
-          setAppCliente={setAppCliente}
-          setAppCantiere={setAppCantiere}
-          setAppOpera= {setAppOpera}
-          setAppPlan = {setAppPlan}
-          setAppElementiSaldati= { setAppElementiSaldati}  /* mi legge gli elementi nel pdf*/ 
-          appRecuperaMiaLista = {appRecuperaMiaLista}
+    <div>
+        <div style={{display:'-ms-flexbox',position:'relative', alignItems: 'center',backgroundColor:'green', textAlign:'center'}}>
+           {/* <h2>Scegli il file pj</h2> */}
+           {titolo}
+          {/* {!visualizzaSceltaListe ?  <Impostazioni setpj8={setpj8} setVisualizzaSceltaliste={setVisualizzaSceltaliste} /> : <p></p>} */}
+          {sceltaPj}
+        </div>
+        <div style={{display:'flex'}}>
+         
+          {/* Colonna sinistra: PDF */}
+          <div className='pdf' style={{flex:1 }}>
+          {/* SEGNAPOSTO PER IL PLANNING, RECUPERIAMO LA LISTA E LA DATA PER DARLA IN MANO A SEEPDF*/ }
+             {planning}
+            {
+              visualizzaSceltaListe ?
+              
+                  <SeePdf 
+              leggiFile={leggiFile}
+              setNumeroPages={setNumeroPages} 
+              setAppLista={setAppLista}
+              setAppCliente={setAppCliente}
+              setAppCantiere={setAppCantiere}
+              setAppOpera= {setAppOpera}
+              setAppPlan = {setAppPlan}
+              setAppElementiSaldati= { setAppElementiSaldati}  /* mi legge gli elementi nel pdf*/ 
+              appRecuperaMiaLista = {appRecuperaMiaLista}
 
-           />
-      </div>
+              /> : <p></p>
+            
+           }
+          </div>
 
         {/* Colonna destra: Compilatore */}
         <div style={{
@@ -150,11 +237,14 @@ function App() {
           height: '100vh', 
           overflow:'auto'
           }}>
-            <h2>Data consegna:{` ${dataConsegnaApp}`}</h2>
-            <h3>{`Ultima lista creata: n. ${pdfListaCreata}`}</h3>
-      <Calendario className='calendario' setDataConsegnaApp={setDataConsegnaApp}  />
-
-          <Compilatore
+            {/* <h2>Data consegna:{` ${dataConsegnaApp}`}</h2> */}
+            {dataConsegna}
+            {/* <h3>{`Ultima lista creata: n. ${pdfListaCreata}`}</h3> */}
+            {ultimaLista}
+      {/* <Calendario className='calendario' setDataConsegnaApp={setDataConsegnaApp}  /> */}
+          {calendario}
+          {compilatore}
+          {/* <Compilatore
 
           numeroPages={numeroPages} 
           //setDataConsegnaApp={setDataConsegnaApp}
@@ -164,30 +254,40 @@ function App() {
           appOpera={appOpera}
           appPlan={appPlan}
           appOperatore={appOperatore}
-          />
+          /> */}
             {/*SONO IN LINEA a  seguire */}
           <div className='contenitore'>
-            <ElencoOperatori
+            {/* <ElencoOperatori
             className='operatori' 
-            setAppOperatore={setAppOperatore} />
-            <ElencoSaldatori className='saldatori' setSaldatoriApp={setSaldatoriApp} />
-            <ElementiSaldati
+            setAppOperatore={setAppOperatore} /> */}
+            {/* <Operatore setAppOperatore={setAppOperatore} /> */}
+            {operatore}
+            {/* <ElencoSaldatori className='saldatori' setSaldatoriApp={setSaldatoriApp} /> */}
+            {saldatori}
+            {/* <ElementiSaldati
             className='elementiSaldati'
-             appElementiSaldati={appElementiSaldati} setAppElementoScelto={setAppElementoScelto} />
-            <Tipologia
+             appElementiSaldati={appElementiSaldati} setAppElementoScelto={setAppElementoScelto} /> */}
+             {elencoElementi}
+            {/* <Tipologia
             className='tipologia'
             setAppTipologia={setAppTipologia}
-             />
-             <Commenti
+             /> */}
+             {tipo}
+             {/* <Commenti
              className='commenti'
              setAppControllatoNdi={setAppControllatoNdi} appControllatoNdi={appControllatoNdi}
-              />
+              /> */}
+              {comments}
           </div>
         {/*fine */}
         
-         <CheckList setListaPagina1={setListaPagina1} />
-         <CheckListDimensioni setListaPagina2={setListaPagina2} listaPagina2Originali={listaPagina2Originali}/>
-         <Footer 
+         {/* <CheckList setListaPagina1={setListaPagina1} /> */}
+         {checkList1}
+         {/* <CheckListDimensioni setListaPagina2={setListaPagina2} listaPagina2Originali={listaPagina2Originali}/> */}
+         {checkList2}
+         {/* <Footer2
+         pj8={pj8}
+         appOperatore={appOperatore} 
          dataConsegnaApp={dataConsegnaApp} 
          appLista={appLista} 
          appCliente={appCliente}
@@ -203,13 +303,16 @@ function App() {
          appParametriStampa={appParametriStampa}
          appControllatoNdi={appControllatoNdi}
          numeroPages={numeroPages}
-         />
+         /> */}
+         {fooder}
 
         
 
           
         </div>
     </div>
+    </div>
+
   );
 }
 

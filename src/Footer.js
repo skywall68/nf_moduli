@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { degrees, PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 import { saveAs } from 'file-saver';
 
@@ -26,6 +26,7 @@ const Footer = ({
   numeroPages,
 
  }) => {
+  const fileInputRef = useRef(); //mi cattura il file pdf pj8 sulla cartella del pc
 
  const [showModalPrint, setShowModalPrint] = useState(false)
 
@@ -70,15 +71,17 @@ const Footer = ({
  //*******************************funzione di stampa ************************************************
      const stampaFilePdf = async ()=>{
       let testoDaStampare=''
+     
        const filePath = process.env.PUBLIC_URL + '/pdfs/PJ 8 - rev 6 - IT.pdf'; // cerca pdf cartella publica
        const response = await fetch(filePath) //recupera il file
        const arrayBuffer = await response.arrayBuffer(); //converte formato binario
+      
        const pdfDoc = await PDFDocument.load(arrayBuffer); //carica come oggetto da modificare
        const page1 = pdfDoc.getPages()[0]; // dichiara una variabile page che contiene l'oggetto rappresentante la prima pagina del documento PDF.
        const { width, height } = page1.getSize(); //utilizza la destructuring assignment di JavaScript per estrarre i valori delle proprietà width e 
        //height dall'oggetto restituito dal metodo getSize() chiamato su un oggetto di pagina (page). 
        const page2 = pdfDoc.getPages()[1];
-      
+       
        const font = await pdfDoc.embedFont(StandardFonts.Helvetica);//utilizzato per disegnare testo sulla pagina del PDF utilizzando quel font specifico
        //prima parte pagina 1 in alto
        let coordinate=0
@@ -268,6 +271,8 @@ const Footer = ({
     console.log('Cancel button clicked!');
  }
 
+ 
+
   return (
     <React.Fragment>
       <Modal 
@@ -280,7 +285,8 @@ const Footer = ({
          
         <h2>mi visualizza il tasto STAMPA</h2>
         <div>
-          
+         
+
           <Tasto onClick={handlePrintClick} label={"stampa"}/>
         </div>
        
