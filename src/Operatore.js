@@ -11,8 +11,8 @@ const Operatore = ({setAppOperatore}) => {
  //setAppOperatore(operatore)
 
   return (
-    <div className='container'>
-        <h2>Controllore:</h2>
+    <div className='containerOperatore'>
+        <h2>Operatore:</h2>
         <input
         type='text'
         onChange={handleInputChange}

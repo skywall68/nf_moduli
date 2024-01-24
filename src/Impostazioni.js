@@ -3,12 +3,17 @@
 import React, { useRef } from 'react'
 import { PDFDocument } from 'pdf-lib';
 
-const Impostazioni = ({setpj8, setVisualizzaSceltaliste}) => {
+import './Impostazioni.css'
+
+const Impostazioni = ({setpj8, setVisualizzaSceltaliste,appElencoSaldatori}) => {
     const fileInputRef = useRef();
     //viene attivato dal tasto importa PDF
 
     const importPDF = async () => {
-
+         if(appElencoSaldatori.length ===0){
+          alert('Scegliere prima elenco saldatori')
+          return
+         } 
         const fileInput = fileInputRef.current;
         if (fileInput.files.length === 0) {
           alert('Seleziona un file PDF prima di procedere.');
@@ -33,7 +38,8 @@ const Impostazioni = ({setpj8, setVisualizzaSceltaliste}) => {
       };
     
   return (
-    <div>
+    <div className='containerImpostazioni'>
+      <h3>Scegli il formato pj</h3>
       <input
         type="file"
         accept=".pdf"

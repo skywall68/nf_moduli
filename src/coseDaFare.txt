@@ -1,2 +1,3 @@
-devo portare i nomi dei saldatori nel compilatore
-devo lavorare con gli elementi saldati e solo lavorati fatto elementi saldati
+
+portare calendario su fooder
+creare un header con 2 tasti pj8 e pj16

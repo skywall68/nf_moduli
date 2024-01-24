@@ -22,6 +22,7 @@ import Footer from './Footer';
 import Footer2 from './Footer2';
 import Impostazioni from './Impostazioni';
 import Operatore from './Operatore';
+import RecuperaSaldatori from './RecuperaSaldatori';
 
 function App() {
   const [pj8, setpj8]=useState();
@@ -34,7 +35,8 @@ function App() {
   const [appCantiere, setAppCantiere] = useState('');
   const [appOpera, setAppOpera] = useState('');
   const [appPlan, setAppPlan] = useState('');
-  const [appOperatore, setAppOperatore] = useState (''); 
+  const [appOperatore, setAppOperatore] = useState ('');
+  const [appElencoSaldatori, setAppElencoSaldatori]=useState([]) 
   const [saldatoriApp, setSaldatoriApp] =useState('Scegli') //legge i saldatori
   const [appElementiSaldati, setAppElementiSaldati]= useState([])
   const [appElementoScelto,setAppElementoScelto]=useState('')
@@ -127,6 +129,7 @@ function App() {
    let dataConsegna;
    let compilatore;
    let operatore;
+   let sceltaElencoSaldatori;
    let saldatori;
    let elencoElementi;
    let tipo;
@@ -136,7 +139,7 @@ function App() {
    let fooder;
    let ultimaLista;
    let sceltaPj;
-   let titolo;
+   
    if(visualizzaSceltaListe){
     planning=<Planning />
     ultimaLista=  <h3>{`Ultima lista creata: n. ${pdfListaCreata}`}</h3>
@@ -152,7 +155,7 @@ function App() {
                   appPlan={appPlan}
                  />
     operatore=<Operatore setAppOperatore={setAppOperatore} />
-    saldatori= <ElencoSaldatori className='saldatori' setSaldatoriApp={setSaldatoriApp} />
+    saldatori= <ElencoSaldatori className='saldatori' setSaldatoriApp={setSaldatoriApp} appElencoSaldatori={appElencoSaldatori} />
     elencoElementi=  <ElementiSaldati 
                      className='elementiSaldati'
                      appElementiSaldati={appElementiSaldati} 
@@ -191,18 +194,24 @@ function App() {
             numeroPages={numeroPages}
             />                          
     } else {
-       titolo= <h2>Scegli il file pj</h2>
-      sceltaPj=<Impostazioni setpj8={setpj8} setVisualizzaSceltaliste={setVisualizzaSceltaliste} />
+
+      
+      sceltaPj=<Impostazioni setpj8={setpj8} setVisualizzaSceltaliste={setVisualizzaSceltaliste} appElencoSaldatori={appElencoSaldatori} />
+      sceltaElencoSaldatori= <RecuperaSaldatori setAppElencoSaldatori={setAppElencoSaldatori} />
     }
+
+    console.log('elenco saldatori dentro app.js:',appElencoSaldatori)
 
 
   return (
     <div>
-        <div style={{display:'-ms-flexbox',position:'relative', alignItems: 'center',backgroundColor:'green', textAlign:'center'}}>
+        <div style={{display:'-ms-flexbox',position:'relative', alignItems: 'center', textAlign:'center'}}>
            {/* <h2>Scegli il file pj</h2> */}
-           {titolo}
+           {sceltaElencoSaldatori}
+           
           {/* {!visualizzaSceltaListe ?  <Impostazioni setpj8={setpj8} setVisualizzaSceltaliste={setVisualizzaSceltaliste} /> : <p></p>} */}
           {sceltaPj}
+          
         </div>
         <div style={{display:'flex'}}>
          

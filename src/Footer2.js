@@ -35,7 +35,16 @@ const Footer2 = ({
  
  
  
- const openModalPrintHandler = ()=> setShowModalPrint(true)// mi apre una finestra modal quando premo tasto conferma
+ const openModalPrintHandler = ()=>{
+  if(dataControllo.length ===0){
+    alert('Scegliere la data di consegna prima di confermare !!!')
+    return
+  }else {
+    setShowModalPrint(true)// mi apre una finestra modal quando premo tasto conferma
+
+  }
+
+ } 
  const closeModalPrintHandler = ()=> setShowModalPrint(false) //chiude il modal
 
  //recupero su localStorage l'operatore
@@ -58,8 +67,8 @@ const Footer2 = ({
  const spuntaSuPiano = 'x'
  const cantiere = `${appCantiere} /`
  const paginaUnoAlto = [spuntaFabbrica,spuntaSuPiano,tipologia,cantiere,opera,cliente,plan,lista,etichetta,saldatori,]
- console.log('nome cantiere:',cantiere)
- console.log('valore del pdf:',pj8)
+ console.log('Data consegna:',dataControllo)
+
 
  //creo un array riepilogativo:
  const arrayCombinato = paginaUnoAlto.map((valore,indice)=>({
@@ -296,19 +305,17 @@ const Footer2 = ({
   return (
     <React.Fragment>
       <Modal 
+      header={<h2>Stampa pdf</h2>}
       show={showModalPrint} 
       onCancel={closeModalPrintHandler} 
       contentClass ="place-item__modal-content"
       footerClass = "place-item__modal-actions"
-      footer={<Tasto onClick={closeModalPrintHandler} label={"cancel"} />}
       >
-         
-      
-        <div>
-          
-
+        <div className='button-container-stampa'>
+          <Tasto onClick={closeModalPrintHandler} label={"cancel"} />
           <Tasto onClick={handlePrintClick} label={"stampa"}/>
         </div>
+      
        
       </Modal >
         
@@ -317,7 +324,7 @@ const Footer2 = ({
     
       <div className='footer'>
 
-          <div className="button-container">
+          <div className="button-container-conferma">
               <Tasto onClick={handleCancelClick} label="CANCEL"/>
               <Tasto onClick={openModalPrintHandler} label="conferma"/>
           </div>

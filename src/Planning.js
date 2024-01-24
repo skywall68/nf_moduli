@@ -4,7 +4,7 @@ import "./Planning.css"
 
 const Planning = () => {
   return (
-    <div className='container'>
+    <div className='containerPlanning'>
         <h2>Sono dentro il planning,</h2> 
         <p>qui lo visualizzo e posso recuperare la lista e la data</p> 
         </div>
