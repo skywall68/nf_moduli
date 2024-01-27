@@ -41,6 +41,7 @@ const Modal = (props) => {
        unmountOnExit 
        timeout={200} 
        classNames="modal"
+       nodeRef={props.nodeRef}
        >
 
       <ModalOverlay {...props} />

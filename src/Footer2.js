@@ -118,7 +118,7 @@ const Footer2 = ({
            x: coordinate.x,
            y: height  - coordinate.y, 
            font,
-           size:parametri_stampa[32].font,
+           size:parametri_stampa[33].font,
            color: rgb(0,0,0),
          })
         })
@@ -127,59 +127,65 @@ const Footer2 = ({
        //const partenzaY = 475 //partenza asse delle y
        //let k = -35 //asse delle y
         //definiamo un ciclo dei controlli che conforme sia 'Conforme' o 'Non Conforme' poi  DA METTERE EVENTUALI COMMENTI ED AZIONI PER OGNI RIGA
-        let mioIdPagina1 = 10
+        let mioIdPagina1 = 10  //corrisponde id:11 del file paramentri stampa
         let coordinate_pagina = []
+        let xNonconforme = parametri_stampa[34].x
+        //console.log('Parametro non Conforme.', xNonconforme)
+        console.log('lista1', listaPagina1)
+        console.log('lista2', listaPagina2)
+        console.log('parametri stampa:',parametri_stampa)
         
         listaPagina1.forEach((controllo )=>{
            coordinate_pagina = parametri_stampa[mioIdPagina1]
-           //k= +35
+           console.log('Parametri stampa.',coordinate_pagina.nome,'x:',coordinate_pagina.x,'y:',coordinate_pagina.y)
+           
            if(controllo.conforme=== true) {
             page1.drawText(testo_spuntato, {
               x:coordinate_pagina.x,
-              y: height -coordinate_pagina.y,
+              y: height - coordinate_pagina.y,
               font,
-              size:parametri_stampa[32].font,
+              size:parametri_stampa[33].font,
               color: rgb(0, 0, 0),
             })
-           } else if (controllo.conforme === 'Non Conforme') {
+           } else if (controllo.conforme === false) {
             page1.drawText(testo_spuntato, {
-              x:coordinate_pagina.x,
+              x:coordinate_pagina.x + xNonconforme,
               y: height -coordinate_pagina.y,
               font,
-              size:parametri_stampa[32].font,
+              size:parametri_stampa[33].font,
               color: rgb(0, 0, 0),
             })
              //mettere if per commenti ed azioni
            if(controllo.commenti !==''){
              page1.drawText(controllo.commenti,{
-               x:parametri_stampa[30].x,
-               y: height -coordinate_pagina.y,
-               font,
-               size:parametri_stampa[32].font,
-               color: rgb(0, 0, 0),  
-             })
-             page1.drawText(controllo.azioneCurativa,{
                x:parametri_stampa[31].x,
                y: height -coordinate_pagina.y,
                font,
-               size:parametri_stampa[32].font,
+               size:parametri_stampa[33].font,
+               color: rgb(0, 0, 0),  
+             })
+             page1.drawText(controllo.azioneCurativa,{
+               x:parametri_stampa[32].x,
+               y: height -coordinate_pagina.y,
+               font,
+               size:parametri_stampa[33].font,
                color: rgb(0, 0, 0),  
              })
            }
  
             
            }
-           mioIdPagina1++
+            mioIdPagina1++
         })
  
        //se l'elemento controllato è maggiore di uno allora riportalo
        if(nElementi>1) {
          const testoCommento=`Controllato 1 elemento di ${nElementi}`
         page1.drawText(testoCommento, {
-          x:parametri_stampa[29].x,
-          y: height -parametri_stampa[29].y,
+          x:parametri_stampa[30].x,
+          y: height -parametri_stampa[30].y,
           font,
-          size:parametri_stampa[32].font,
+          size:parametri_stampa[33].font,
           color: rgb(0, 0, 0),
         })
        }
@@ -195,7 +201,7 @@ const Footer2 = ({
             x:coordinate_pagina.x,
             y: height -coordinate_pagina.y,
             font,
-            size:parametri_stampa[32].font,
+            size:parametri_stampa[33].font,
             color: rgb(0, 0, 0),
            })
         } else if (controllo.conforme === 'Non Conforme'){
@@ -203,29 +209,29 @@ const Footer2 = ({
             x:coordinate_pagina.x,
             y: height -coordinate_pagina.y,
             font,
-            size:parametri_stampa[32].font,
+            size:parametri_stampa[33].font,
             color: rgb(0, 0, 0),
            })
            //mettere if per commenti ed azioni
            if(controllo.commenti !==''){
              page2.drawText(controllo.commenti,{
-               x:parametri_stampa[30].x,
-               y: height -coordinate_pagina.y,
-               font,
-               size:parametri_stampa[32].font,
-               color: rgb(0, 0, 0),  
-             })
-             page2.drawText(controllo.azioneCurativa,{
                x:parametri_stampa[31].x,
                y: height -coordinate_pagina.y,
                font,
-               size:parametri_stampa[32].font,
+               size:parametri_stampa[33].font,
+               color: rgb(0, 0, 0),  
+             })
+             page2.drawText(controllo.azioneCurativa,{
+               x:parametri_stampa[32].x,
+               y: height -coordinate_pagina.y,
+               font,
+               size:parametri_stampa[33].font,
                color: rgb(0, 0, 0),  
              })
            }
         }
         mioIdPagina2++
-        console.log('elementi listaPagina2', listaPagina2)
+        //console.log('elementi listaPagina2', listaPagina2)
  
        })
        //data del controllo:
@@ -237,6 +243,16 @@ const Footer2 = ({
          size:parametri_stampa[32].font,
          color: rgb(1, 0, 0),
         })
+        // //operatore:
+        page2.drawText(operatore,{
+          x:parametri_stampa[29].x,
+          y: height -parametri_stampa[29].y,
+          font,
+          size:parametri_stampa[33].font,
+          color: rgb(1, 0, 0),
+
+        })
+
         
  
         const modifiedPdfBytes = await pdfDoc.save(); //consente di salvare le modifiche apportate al documento PDF e ottenere i byte rappresentanti il PDF modificato
@@ -301,15 +317,17 @@ const Footer2 = ({
   // Puoi eseguire azioni aggiuntive quando il file viene selezionato
   console.log("File selezionato:", fileInputRef.current.files[0].name);
 };
+const nodeRef = useRef(null);
 
   return (
     <React.Fragment>
       <Modal 
-      header={<h2>Stampa pdf</h2>}
+      // header={<h2>Stampa pdf</h2>}
       show={showModalPrint} 
       onCancel={closeModalPrintHandler} 
       contentClass ="place-item__modal-content"
       footerClass = "place-item__modal-actions"
+      nodeRef={nodeRef}
       >
         <div className='button-container-stampa'>
           <Tasto onClick={closeModalPrintHandler} label={"cancel"} />

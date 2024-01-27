@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 
 import './CheckList.css'
 
@@ -11,7 +11,8 @@ const CheckList = ({setListaPagina1}) => {
     { id: 4, nome: 'Diametro perni', conforme: null, commenti:'', azioneCurativa:'' },
     { id: 5, nome: 'Qualità ferri', conforme: null, commenti:'', azioneCurativa:'' },
     { id: 6, nome: 'Identificatore armatura/etichette', conforme: null, commenti:'', azioneCurativa:'' },
-    { id: 7, nome: 'Rigidità insieme e qualità punti saldatura', conforme: null, commenti:'', azioneCurativa:'' },
+    { id: 7, nome: 'Rigidità insieme e qualità punti saldatura', conforme: null, commenti:'', azioneCurativa:'' }
+   
   ]);
   const [mostraTabella, setMostraTabella] = useState(true); //mi permette di nascondere la tabella
  
@@ -19,18 +20,21 @@ const CheckList = ({setListaPagina1}) => {
     setMostraTabella((prev) => !prev);
   };
 
- 
-
   const handleOptionChange =(id, conformeValue)=>{
-    setControlli((prevControlli)=>
-      prevControlli.map((controllo)=>
-        controllo.id === id ? {...controllo, conforme: conformeValue} : controllo
-      )
-    )
+    const updatedItems = controlli.map(item =>{
+      if (item.id === id) {
+        return { ...item, conforme: conformeValue };
+      }
+      return item;
+    });
+    setControlli(updatedItems)
+    }
+    console.log('valore:',controlli)
     setListaPagina1(controlli)
-  }
+   
+  
 
-  const handleInputChangeCommenti = (id,field,value) =>{
+   const handleInputChangeCommenti = (id,field,value) =>{
    
     setControlli((prevControlli)=>
       prevControlli.map((commento)=>
@@ -93,7 +97,7 @@ const CheckList = ({setListaPagina1}) => {
                     <input
                       type="radio"
                       name={`risultato-${controllo.id}`}
-                      value="Conforme"
+                      value="true"
                       checked={controllo.conforme === true}
                       onChange={()=> handleOptionChange(controllo.id, true)}
                      />
@@ -105,7 +109,7 @@ const CheckList = ({setListaPagina1}) => {
                     <input
                       type="radio"
                       name={`risultato-${controllo.id}`}
-                      value="Non Conforme"
+                      value="false"
                       checked={controllo.conforme === false}
                       onChange={()=> handleOptionChange(controllo.id, false)}
                      />
